@@ -65,31 +65,7 @@ export default function App() {
             <span>Rekabetci ortam</span>
           </div>
         </motion.div>
-
-        <motion.form onSubmit={handleSubmit} className="email-form" variants={itemVariants}>
-          <input
-            type="email"
-            placeholder="E-postanizi girin"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            aria-label="Email adresi"
-          />
-          <button type="submit" className="btn-notify">
-            {submitted ? 'Kaydedildi! ✓' : 'Bildirim Al'}
-          </button>
-        </motion.form>
-
-        <motion.p className="countdown-text" variants={itemVariants}>
-          {submitted ? 'Harika! Geliste biz seni haberdar edicegiz.' : 'Sunucu cok yakininda online olacak.'}
-        </motion.p>
       </motion.div>
-
-      <footer className="coming-soon-footer">
-        <p>
-          © {new Date().getFullYear()} VexusMC. Made with <Heart size={14} className="heart" /> for gamers.
-        </p>
-      </footer>
     </div>
   );
 }
