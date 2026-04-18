@@ -1,12 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-describe('Landing page', () => {
-  it('renders hero and ip', () => {
+describe('Coming Soon page', () => {
+  it('renders coming soon message and email form', () => {
     render(<App />);
 
     expect(screen.getByRole('heading', { name: /vexusmc/i })).toBeInTheDocument();
-    expect(screen.getAllByText(/oyna\.vexusmc\.tech/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByRole('button', { name: /ip kopyala/i }).length).toBeGreaterThan(0);
+    expect(screen.getByText(/yakinda geliyor/i)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/e-postanizi girin/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /bildirim al/i })).toBeInTheDocument();
   });
 });
