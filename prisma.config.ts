@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { defineConfig } from "prisma/config";
 
 export default defineConfig({
@@ -8,4 +9,3 @@ export default defineConfig({
     output: "./node_modules/@prisma/client",
   },
 });
-
