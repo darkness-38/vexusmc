@@ -6,18 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="399ccb3b-0e57-4140-a4ec-39356a39c725" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/ceza-sorgula/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/ceza-sorgula/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/kullanici/bakiye/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/kullanici/bakiye/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/kullanici/profil/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/kullanici/profil/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/kullanici/siparisler/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/kullanici/siparisler/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/liderlik/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/liderlik/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/magaza/urunler/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/magaza/urunler/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/odeme/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/odeme/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/hesabim/bakiye/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/hesabim/bakiye/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/hesabim/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/hesabim/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/hesabim/siparisler/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/hesabim/siparisler/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/magaza/[urun_id]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/magaza/[urun_id]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,7 +165,7 @@
       <workItem from="1776794962677" duration="177000" />
       <workItem from="1776795736579" duration="169000" />
       <workItem from="1777208728746" duration="5355000" />
-      <workItem from="1777966453251" duration="3823000" />
+      <workItem from="1777966453251" duration="5645000" />
     </task>
     <servers />
   </component>

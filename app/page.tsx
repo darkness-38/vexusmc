@@ -11,10 +11,21 @@ export default function Home() {
     <div className="noise">
       <HeroSection />
       <section className="overflow-hidden border-y border-[var(--border)] bg-[var(--bg-secondary)] py-3">
-        <div className="animate-[marquee_18s_linear_infinite] whitespace-nowrap text-sm text-[var(--text-secondary)]">
-          {[...LIVE_STATS_MARQUEE, ...LIVE_STATS_MARQUEE].map((item, index) => (
-            <span key={`${item}-${index}`} className="mx-6">{item}</span>
-          ))}
+        <div className="flex w-max min-w-max animate-[marquee_18s_linear_infinite] text-sm text-[var(--text-secondary)]">
+          <div className="flex shrink-0 items-center gap-12 whitespace-nowrap px-6">
+            {LIVE_STATS_MARQUEE.map((item) => (
+              <span key={item} className="shrink-0">
+                {item}
+              </span>
+            ))}
+          </div>
+          <div className="flex shrink-0 items-center gap-12 whitespace-nowrap px-6" aria-hidden="true">
+            {LIVE_STATS_MARQUEE.map((item) => (
+              <span key={`${item}-clone`} className="shrink-0">
+                {item}
+              </span>
+            ))}
+          </div>
         </div>
       </section>
       <FeaturesSection />
