@@ -1,39 +1,63 @@
-# VexusMC Landing Page
+# VexusMC Web
 
-Premium tasarimli React landing page projesi.
+Next.js 14 + TypeScript tabanli, tamamen Turkce VexusMC web sitesi.
 
-## Ozellikler
+## Teknolojiler
+- Next.js 14 (App Router)
+- Tailwind CSS v3 + Framer Motion
+- NextAuth v5 (Credentials)
+- Prisma + SQLite
+- Zustand, React Hook Form, Zod, Sonner
 
-- Framer Motion ile yumuak animasyonlar
-- Responsive premium dark tema
-- Sunucu IP kopyalama butonu (`oyna.vexusmc.tech`)
-- Vercel'e uygun Vite setup
-- Vitest + Testing Library ile temel testler
-
-## Gelistirme
-
+## Kurulum
 ```bash
 npm install
+npx prisma generate
+npx prisma db push
+npx prisma db seed
 npm run dev
 ```
 
-## Test
+## Test Kullanici Bilgileri
+- `testoyuncu / test123`
+- `vipuser / vip123`
+- `mvpuser / mvp123`
 
-```bash
-npm run test:run
-```
+## Notlar
+- Korunan rotalar: `/hesabim/*`, `/bakiye-yukle`
+- Minotar avatar endpointleri kullanilir.
 
-## Build
+## Smoke Test Checklist
+- [ ] Bagimliliklar ve Prisma adimlari tamamlandi
+- [ ] Uygulama lint/build adimlarini hatasiz geciyor
+- [ ] Ana sayfa, magaza, liderlik ve iletisim sayfalari aciliyor
+- [ ] Giris akisi calisiyor (`testoyuncu / test123`)
+- [ ] Korumali rota yonlendirmesi dogru (`/hesabim` -> `/giris`)
+- [ ] API endpointleri 200 donuyor
 
-```bash
+```powershell
+npm install
+npx prisma generate
+npx prisma db push
+npx prisma db seed
+npm run lint
 npm run build
 ```
 
-## Vercel Deploy
+```powershell
+npm run dev
+```
 
-1. Repoyu GitHub'a pushla.
-2. Vercel panelinde projeyi import et.
-3. Framework: `Vite` sec.
-4. Build command: `npm run build`
-5. Output directory: `dist`
+Tek komut smoke test:
 
+```powershell
+npm run smoke
+```
+
+Kontrol URL'leri:
+- `http://localhost:3000/`
+- `http://localhost:3000/magaza`
+- `http://localhost:3000/liderlik`
+- `http://localhost:3000/iletisim`
+- `http://localhost:3000/api/liderlik?mode=genel`
+- `http://localhost:3000/api/magaza/urunler`

@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-primary: #050508;
+  --bg-secondary: #0d0d14;
+  --bg-tertiary: #14141f;
+  --bg-glass: rgba(255, 255, 255, 0.03);
+  --accent-green: #00ff88;
+  --accent-green-dim: #00cc6a;
+  --accent-purple: #7c3aed;
+  --accent-purple-dim: #6d28d9;
+  --accent-gold: #f59e0b;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #475569;
+  --border: rgba(255, 255, 255, 0.07);
+  --border-hover: rgba(0, 255, 136, 0.3);
+  --danger: #ef4444;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --glow-green: 0 0 20px rgba(0, 255, 136, 0.4);
+  --glow-purple: 0 0 20px rgba(124, 58, 237, 0.4);
+}
+
+body {
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  font-family: var(--font-outfit), Arial, sans-serif;
+  background-image: radial-gradient(circle at top left, rgba(124, 58, 237, 0.12), transparent 45%),
+    radial-gradient(circle at bottom right, rgba(0, 255, 136, 0.08), transparent 45%);
+}
+
+* {
+  border-color: var(--border);
+}
+
+@layer components {
+  .glass {
+    @apply border rounded-xl backdrop-blur-sm;
+    background: var(--bg-glass);
+  }
+
+  .card-base {
+    @apply bg-[var(--bg-secondary)] border border-[var(--border)] rounded-xl backdrop-blur-sm transition-all duration-300;
+  }
+
+  .noise {
+    position: relative;
+  }
+
+  .noise::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image: radial-gradient(#fff 0.4px, transparent 0.4px);
+    background-size: 3px 3px;
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+

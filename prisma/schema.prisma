@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id           String        @id @default(cuid())
+  username     String        @unique
+  password     String
+  email        String?       @unique
+  balance      Float         @default(0)
+  rank         String        @default("Oyuncu")
+  createdAt    DateTime      @default(now())
+  lastLoginAt  DateTime?
+  orders       Order[]
+  transactions Transaction[]
+  penalties    Penalty[]
+}
+
+model Product {
+  id          String  @id @default(cuid())
+  name        String
+  description String
+  price       Float
+  vcPrice     Int?
+  category    String
+  icon        String
+  featured    Boolean @default(false)
+  active      Boolean @default(true)
+  order       Int     @default(0)
+  orders      Order[]
+}
+
+model Order {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  amount    Float
+  status    String   @default("tamamlandi")
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
+}
+
+model Transaction {
+  id        String   @id @default(cuid())
+  userId    String
+  type      String
+  amount    Float
+  vcAmount  Int
+  method    String?
+  status    String   @default("tamamlandi")
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Penalty {
+  id        String    @id @default(cuid())
+  userId    String?
+  username  String
+  type      String
+  reason    String
+  duration  String?
+  expiresAt DateTime?
+  isActive  Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  user      User?     @relation(fields: [userId], references: [id])
+}
+
+model LeaderboardEntry {
+  id        String   @id @default(cuid())
+  username  String
+  gameMode  String
+  score     Int
+  rank      String   @default("Oyuncu")
+  updatedAt DateTime @updatedAt
+}
