@@ -3,6 +3,8 @@ import { prisma } from "@/lib/prisma";
 import { BalanceCard } from "@/components/hesabim/BalanceCard";
 import { OrdersTable } from "@/components/hesabim/OrdersTable";
 
+export const dynamic = "force-dynamic";
+
 export default async function BakiyePage() {
   const session = await auth();
   const user = await prisma.user.findUnique({ where: { id: session?.user?.id } });

@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma";
 import { OrdersTable } from "@/components/hesabim/OrdersTable";
 import { Button } from "@/components/ui/Button";
 
+export const dynamic = "force-dynamic";
+
 export default async function SiparislerPage() {
   const session = await auth();
   const orders = await prisma.order.findMany({
