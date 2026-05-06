@@ -23,33 +23,51 @@ export const authConfig: NextAuthConfig = {
   providers: [],
 
   callbacks: {
-    // This jwt callback runs in the Edge too (on subsequent requests).
-    // It only reads from the existing token — no DB calls.
+    /**
+     * jwt() — runs on every request that needs a token.
+     *
+     * On first sign-in, `user` is populated with the object returned
+     * from authorize(). We copy every field we need into the token so
+     * they survive across requests.
+     *
+     * IMPORTANT: We set token.sub explicitly. NextAuth v5 uses token.sub
+     * as the canonical user identifier. Without it, req.auth can be null
+     * even when a cookie exists, causing the middleware to redirect to /giris.
+     */
     jwt({ token, user }) {
       if (user) {
+        // token.sub is NextAuth's built-in "subject" field — must equal user.id
+        token.sub = user.id ?? token.sub;
         token.id = user.id;
-        token.username =
-          (user as { username?: string }).username ?? user.name ?? undefined;
+        token.name = user.name;
+        token.username = (user as { username?: string }).username ?? user.name ?? undefined;
         token.rank = (user as { rank?: string }).rank ?? "Oyuncu";
       }
       return token;
     },
 
-    // This session callback also runs in the Edge on /api/auth/session calls.
+    /**
+     * session() — shapes the session object exposed to the client.
+     *
+     * We read from `token` (not from DB) so this is Edge-safe.
+     * Every field set in jwt() above is available here via token.
+     */
     session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id as string;
+      if (token) {
+        session.user.id = (token.id ?? token.sub) as string;
+        session.user.name = token.name as string;
         session.user.username = token.username as string;
-        session.user.rank = token.rank as string;
+        session.user.rank = (token.rank ?? "Oyuncu") as string;
       }
       return session;
     },
 
-    // authorized() is called by the middleware auth() wrapper on every request.
-    // Return true to allow, false/redirect to deny.
-    // The actual redirect logic is handled in middleware.ts for more control.
-    authorized({ auth }) {
-      // Simply expose whether a session exists — redirect logic is in middleware.ts
+    /**
+     * authorized() — called by the middleware auth() wrapper.
+     * We return true here unconditionally; redirect logic is in middleware.ts
+     * where we have full control via req.auth.
+     */
+    authorized() {
       return true;
     },
   },
