@@ -34,8 +34,20 @@ export default function IletisimPage() {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <section className="mx-auto max-w-5xl space-y-6 px-4 py-10">
-      <h1 className="font-orbitron text-4xl text-center mb-8">Sıkça Sorulan Sorular</h1>
+    <section className="mx-auto max-w-5xl space-y-8 px-4 py-10">
+      <h1 className="font-orbitron text-4xl text-center">İletişim & Sıkça Sorulan Sorular</h1>
+      
+      <div className="flex justify-center">
+        <iframe 
+          src="https://discord.com/widget?id=1494737331528269940&theme=dark" 
+          width="350" 
+          height="500" 
+          allowTransparency={true} 
+          frameBorder="0" 
+          sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
+          className="rounded-xl shadow-lg border border-[var(--border)]"
+        />
+      </div>
 
       <div className="card-base p-6">
         <div className="space-y-3">
