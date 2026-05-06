@@ -109,7 +109,7 @@ function GirisPageContent() {
 
 
         <div className="mt-4 rounded-lg border border-[var(--border)] bg-[var(--bg-tertiary)] p-3 text-sm text-[var(--text-secondary)]">
-          Henüz hesabın yok mu? Sunucuya ilk kez bağlandığınızda oyun içerisinde '/register <şifre> <şifre>' komutuyla hesabınız otomatik olarak oluşturulur.
+          Henüz hesabın yok mu? Sunucuya ilk kez bağlandığınızda oyun içerisinde &apos;/register &lt;şifre&gt; &lt;şifre&gt;&apos; komutuyla hesabınız otomatik olarak oluşturulur.
           </div>
           </motion.div>
         </div>
