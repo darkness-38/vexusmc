@@ -23,6 +23,10 @@ export const authConfig: NextAuthConfig = {
 
   // Required for Vercel deployments — prevents UntrustedHost errors.
   trustHost: true,
+  
+  // Enforce secure cookies in production to prevent cookie mismatch
+  // between Edge Middleware and Node.js API Route on Vercel.
+  useSecureCookies: process.env.NODE_ENV === "production",
 
   // DO NOT set custom cookies config here.
   // NextAuth v5 auto-detects HTTPS on Vercel and configures secure

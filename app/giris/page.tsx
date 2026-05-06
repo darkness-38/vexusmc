@@ -3,7 +3,7 @@
 import { Suspense, useState } from "react";
 
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -24,7 +24,6 @@ function GirisPageContent() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [shake, setShake] = useState(false);
-  const router = useRouter();
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect") ?? "/hesabim";
 
@@ -32,21 +31,40 @@ function GirisPageContent() {
 
   const onSubmit = async (values: FormValues) => {
     setLoading(true);
-    const result = await signIn("credentials", {
-      username: values.username,
-      password: values.password,
-      redirect: false,
-    });
 
-    if (result?.ok) {
-      router.push(redirect);
-      return;
+    try {
+      const result = await signIn("credentials", {
+        username: values.username,
+        password: values.password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        setShake(true);
+        setTimeout(() => setShake(false), 500);
+        form.setError("root", { message: "Kullanıcı adı veya şifre hatalı." });
+        setLoading(false);
+        return;
+      }
+
+      if (result?.ok) {
+        // Hard redirect — ensures the browser sends the fresh auth cookie
+        // on the next request. router.push() (soft navigation) can hang
+        // because the middleware doesn't see the cookie on a client-side nav.
+        window.location.href = redirect;
+        return;
+      }
+
+      // Fallback: unexpected response shape
+      setShake(true);
+      setTimeout(() => setShake(false), 500);
+      form.setError("root", { message: "Bir hata oluştu. Lütfen tekrar deneyin." });
+      setLoading(false);
+    } catch {
+      // Network error / timeout
+      form.setError("root", { message: "Sunucuya bağlanılamadı. Lütfen tekrar deneyin." });
+      setLoading(false);
     }
-
-    setShake(true);
-    setTimeout(() => setShake(false), 500);
-    form.setError("root", { message: "Kullanıcı adı veya şifre hatalı." });
-    setLoading(false);
   };
 
   return (
