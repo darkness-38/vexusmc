@@ -6,12 +6,14 @@ declare module "next-auth" {
       id: string;
       username: string;
       rank: string;
+      balance: number;
     } & DefaultSession["user"];
   }
 
   interface User {
     username: string;
     rank: string;
+    balance: number;
   }
 }
 
@@ -21,6 +23,7 @@ declare module "next-auth/jwt" {
     name?: string;
     username?: string;
     rank?: string;
+    balance?: number;
   }
 }
 

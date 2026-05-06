@@ -50,6 +50,7 @@ export const authConfig: NextAuthConfig = {
         token.username =
           (user as { username?: string }).username ?? user.name ?? undefined;
         token.rank = (user as { rank?: string }).rank ?? "Oyuncu";
+        token.balance = (user as { balance?: number }).balance ?? 0;
       }
       return token;
     },
@@ -64,6 +65,7 @@ export const authConfig: NextAuthConfig = {
         session.user.name = token.name as string;
         session.user.username = token.username as string;
         session.user.rank = (token.rank ?? "Oyuncu") as string;
+        session.user.balance = (token.balance ?? 0) as number;
       }
       return session;
     },

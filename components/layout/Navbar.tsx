@@ -57,10 +57,14 @@ export function Navbar() {
           {session?.user ? (
             <div className="flex items-center gap-3">
               <Link href="/hesabim" className="flex items-center gap-2 text-sm transition-colors hover:text-[var(--accent-green)]">
+                <div className="flex items-center gap-1 rounded-full border border-[var(--border)] bg-[var(--bg-tertiary)] px-3 py-1 mr-1">
+                  <span className="font-bold text-[var(--accent-green)]">{session.user.balance}</span>
+                  <span className="text-xs font-medium text-[var(--text-secondary)]">VC</span>
+                </div>
                 <Avatar username={session.user.username} size={32} />
                 <span className="font-medium">{session.user.username}</span>
               </Link>
-              <Button variant="secondary" size="sm" onClick={() => signOut({ callbackUrl: "/" })}>Çıkış</Button>
+              <Button variant="secondary" onClick={() => signOut({ callbackUrl: "/" })}>Çıkış</Button>
             </div>
           ) : (
             <Link href="/giris"><Button>Giriş Yap</Button></Link>
@@ -90,10 +94,14 @@ export function Navbar() {
               {session?.user ? (
                 <div className="flex flex-col gap-3">
                   <Link href="/hesabim" className="flex items-center gap-2 text-sm" onClick={() => setOpen(false)}>
+                    <div className="flex items-center gap-1 rounded-full border border-[var(--border)] bg-[var(--bg-tertiary)] px-3 py-1 mr-1">
+                      <span className="font-bold text-[var(--accent-green)]">{session.user.balance}</span>
+                      <span className="text-xs font-medium text-[var(--text-secondary)]">VC</span>
+                    </div>
                     <Avatar username={session.user.username} size={32} />
                     <span className="font-medium">{session.user.username}</span>
                   </Link>
-                  <Button variant="secondary" size="sm" onClick={() => signOut({ callbackUrl: "/" })}>Çıkış</Button>
+                  <Button variant="secondary" onClick={() => signOut({ callbackUrl: "/" })}>Çıkış</Button>
                 </div>
               ) : (
                 <Link href="/giris" onClick={() => setOpen(false)}><Button className="w-full">Giriş Yap</Button></Link>

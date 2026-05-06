@@ -109,19 +109,19 @@ function GirisPageContent() {
 
 
         <div className="mt-4 rounded-lg border border-[var(--border)] bg-[var(--bg-tertiary)] p-3 text-sm text-[var(--text-secondary)]">
-          Henüz hesabın yok mu? Sunucuya bağlan, hesabın otomatik oluşturulur. Web üzerinden kayıt yapılmaz.
+          Henüz hesabın yok mu? Sunucuya ilk kez bağlandığınızda oyun içerisinde '/register <şifre> <şifre>' komutuyla hesabınız otomatik olarak oluşturulur.
+          </div>
+          </motion.div>
         </div>
-      </motion.div>
-    </div>
-  );
+        );
 }
 
-export default function GirisPage() {
+        export default function GirisPage() {
   return (
-    <Suspense fallback={<div className="grid min-h-[calc(100vh-64px)] place-items-center">Yükleniyor...</div>}>
-      <GirisPageContent />
-    </Suspense>
-  );
+        <Suspense fallback={<div className="grid min-h-[calc(100vh-64px)] place-items-center">Yükleniyor...</div>}>
+          <GirisPageContent />
+        </Suspense>
+        );
 }
 
 
