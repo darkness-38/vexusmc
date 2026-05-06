@@ -106,9 +106,7 @@ function GirisPageContent() {
           </Button>
         </form>
 
-        <Link href="/sifremi-unuttum" className="mt-3 inline-block text-sm text-[var(--text-secondary)] hover:text-[var(--accent-green)]">
-          Şifremi unuttum
-        </Link>
+
 
         <div className="mt-4 rounded-lg border border-[var(--border)] bg-[var(--bg-tertiary)] p-3 text-sm text-[var(--text-secondary)]">
           Henüz hesabın yok mu? Sunucuya bağlan, hesabın otomatik oluşturulur. Web üzerinden kayıt yapılmaz.

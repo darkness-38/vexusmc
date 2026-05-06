@@ -10,7 +10,7 @@ const menu = [
   { href: "/hesabim", label: "Profilim" },
   { href: "/hesabim/bakiye", label: "Bakiyem" },
   { href: "/hesabim/siparisler", label: "Siparişlerim" },
-  { href: "/hesabim/guvenlik", label: "Güvenlik" },
+
 ];
 
 export function Sidebar({ username, rank }: { username: string; rank: string }) {

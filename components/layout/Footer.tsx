@@ -23,7 +23,7 @@ export function Footer() {
           <div className="space-y-2 text-sm text-[var(--text-secondary)]">
             <Link href="/iletisim">İletişim</Link><br />
             <Link href="/kurallar">Kurallar</Link><br />
-            <Link href="/sifremi-unuttum">Şifremi Unuttum</Link>
+
           </div>
         </div>
         <div>

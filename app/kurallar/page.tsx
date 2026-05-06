@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Button } from "@/components/ui/Button";
+
 
 const sections = [
   { title: "📋 Genel Kurallar", items: ["Sunucu düzenini bozmak yasaktır.", "Yetkililere saygısızlık yapılamaz.", "Hesap paylaşımı önerilmez.", "Bug kullanımı yasaktır.", "Sunucu reklamı yasaktır.", "Diğer oyuncuların oyun keyfini bozma.", "Kural ihlalinde yaptırım uygulanır.", "Karar yetkililerindir."] },
@@ -14,7 +14,6 @@ const sections = [
 
 export default function KurallarPage() {
   const [active, setActive] = useState<number | null>(0);
-  const [accepted, setAccepted] = useState(false);
 
   return (
     <section className="mx-auto max-w-5xl space-y-4 px-4 py-10">
@@ -40,19 +39,6 @@ export default function KurallarPage() {
           </AnimatePresence>
         </article>
       ))}
-
-      <div className="card-base p-4">
-        <h2 className="mb-3 font-semibold">Örnek Ceza Tablosu</h2>
-        <table className="w-full text-sm">
-          <tbody>
-            <tr><td>Küfür</td><td>1-3 gün mute</td></tr>
-            <tr><td>Hile</td><td>Kalıcı ban</td></tr>
-            <tr><td>Spam</td><td>30 dk mute</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <Button onClick={() => setAccepted(true)}>{accepted ? "✓ Kabul edildi" : "Kuralları anladım ve kabul ediyorum"}</Button>
     </section>
   );
 }
