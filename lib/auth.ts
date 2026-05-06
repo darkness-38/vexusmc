@@ -11,6 +11,10 @@ const loginSchema = z.object({
 });
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  // AUTH_SECRET is the NextAuth v5 env var name.
+  // Explicitly setting it ensures the middleware and the JWT callbacks
+  // always use the same signing key.
+  secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
   session: { strategy: "jwt" },
   providers: [
     Credentials({
@@ -42,11 +46,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         }
         if (!valid) return null;
 
-        await prisma.user.update({
-          where: { id: user.id },
-          data: { lastLoginAt: new Date() },
-        });
+        // Wrapped in try/catch: a DB error here must NEVER prevent the
+        // return value from reaching NextAuth — otherwise authorize() returns
+        // undefined (not null), which NextAuth treats as a failure.
+        try {
+          await prisma.user.update({
+            where: { id: user.id },
+            data: { lastLoginAt: new Date() },
+          });
+        } catch {
+          // Non-critical: proceed with login even if timestamp update fails.
+        }
 
+        // Return an explicit, fully-typed object so the jwt callback
+        // receives all fields on the first login tick.
         return {
           id: user.id,
           name: user.username,
