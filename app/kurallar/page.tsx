@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 const sections = [
   { title: "📋 Genel Kurallar", items: ["Sunucu düzenini bozmak yasaktır.", "Yetkililere saygısızlık yapılamaz.", "Hesap paylaşımı önerilmez.", "Bug kullanımı yasaktır.", "Sunucu reklamı yasaktır.", "Diğer oyuncuların oyun keyfini bozma.", "Kural ihlalinde yaptırım uygulanır.", "Karar yetkililerindir."] },
-  { title: "⚔️ PvP & Oyun Kuralları", items: ["Teaming limitlerine uy.", "Spawn kill yasaktır.", "Arena dışı exploit yasaktır.", "Etkinliklerde hile yasaktır.", "Farm bot yasaktır.", "AFK abuse yasaktır."] },
+  { title: "⚔️ PvP & Oyun Kuralları", items: ["Teaming limitlerine uy.", "Spawn kill yasaktır.", "Arena dışı exploit yasaktır.", "Etkinliklerde hile yasaktır.", "Farm bot yasaktır."] },
   { title: "💬 Sohbet & Davranış Kuralları", items: ["Küfür ve hakaret yasaktır.", "Irkçı/ayrımcı dil yasaktır.", "Spam/flood yasaktır.", "Kışkırtıcı içerik yasaktır.", "Kişisel bilgi paylaşımı yasaktır.", "Topluluk diline uyum zorunludur."] },
   { title: "🔧 Hile & Exploit Kuralları", items: ["X-Ray, KillAura vb. yasaktır.", "Makro ve otomasyon yasaktır.", "Client exploitleri yasaktır.", "Duplication yasaktır.", "Hile raporları kanıtla yapılmalıdır."] },
   { title: "🛒 Mağaza & Ödeme Kuralları", items: ["Satın alımlar dijital üründür.", "İade koşulları destek ekibince değerlendirilir.", "Ödeme açıklaması doğru yazılmalıdır.", "Çalıntı kart kullanımı kalıcı ban sebebidir."] },
