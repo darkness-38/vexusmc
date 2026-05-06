@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="399ccb3b-0e57-4140-a4ec-39356a39c725" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,8 +23,8 @@
   </component>
   <component name="CopilotUserSelectedModel">
     <selectedModels>
-      <entry key="agent-panel" value="Auto" />
-      <entry key="chat-panel" value="Auto" />
+      <entry key="agent-panel" value="GPT-5.2-Codex" />
+      <entry key="chat-panel" value="GPT-5.2-Codex" />
     </selectedModels>
   </component>
   <component name="EmbeddingIndexingInfo">
@@ -165,7 +166,7 @@
       <workItem from="1776794962677" duration="177000" />
       <workItem from="1776795736579" duration="169000" />
       <workItem from="1777208728746" duration="5355000" />
-      <workItem from="1777966453251" duration="5645000" />
+      <workItem from="1777966453251" duration="7100000" />
     </task>
     <servers />
   </component>
