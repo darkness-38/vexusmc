@@ -14,46 +14,29 @@
  */
 import type { NextAuthConfig } from "next-auth";
 
-// Determine if we're running over HTTPS.
-// Setting secure: true on http://localhost will cause the browser to
-// REFUSE to send the cookie back — silently breaking the session.
-const useSecureCookies = process.env.NEXTAUTH_URL?.startsWith("https://") ?? false;
-
 export const authConfig: NextAuthConfig = {
-  secret: process.env.NEXTAUTH_SECRET,
+  // AUTH_SECRET is the canonical env var for NextAuth v5 (Auth.js).
+  // Falls back to NEXTAUTH_SECRET for backward compatibility.
+  secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
+
   session: { strategy: "jwt" },
 
-  // Prevents "UntrustedHost" errors on Vercel, behind proxies,
-  // or when the Host header doesn't match NEXTAUTH_URL.
+  // Required for Vercel deployments — prevents UntrustedHost errors.
   trustHost: true,
 
-  // Explicit cookie configuration ensures the session token is set
-  // correctly regardless of deployment environment.
-  cookies: {
-    sessionToken: {
-      name: "next-auth.session-token",
-      options: {
-        httpOnly: true,
-        sameSite: "lax",
-        path: "/",
-        secure: useSecureCookies,
-      },
-    },
-  },
+  // DO NOT set custom cookies config here.
+  // NextAuth v5 auto-detects HTTPS on Vercel and configures secure
+  // cookies with the correct name prefix automatically.
 
-  // Providers array must be present but empty here — the real Credentials
-  // provider (which needs Prisma) is added in lib/auth.ts.
+  // Providers: empty here, real Credentials provider is in lib/auth.ts.
   providers: [],
 
   callbacks: {
     /**
      * jwt() — runs on every request that touches the session.
      *
-     * On first sign-in, `user` is the object returned from authorize().
-     * We copy fields into the token so they persist across requests.
-     *
-     * token.sub is NextAuth's canonical user identifier — without it,
-     * req.auth in the middleware is null even when a cookie exists.
+     * On first sign-in, `user` is the object from authorize().
+     * token.sub is NextAuth's canonical user ID — must be set.
      */
     jwt({ token, user }) {
       if (user) {
@@ -83,7 +66,7 @@ export const authConfig: NextAuthConfig = {
 
     /**
      * authorized() — called by the middleware auth() wrapper.
-     * Return true unconditionally; custom redirect logic lives in middleware.ts.
+     * Return true unconditionally; redirect logic is in middleware.ts.
      */
     authorized() {
       return true;
