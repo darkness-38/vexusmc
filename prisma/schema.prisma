@@ -12,7 +12,6 @@ model User {
   id           String        @id @default(cuid())
   username     String        @unique
   password     String
-  email        String?       @unique
   balance      Float         @default(0)
   rank         String        @default("Oyuncu")
   createdAt    DateTime      @default(now())
