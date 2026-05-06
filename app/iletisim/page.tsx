@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { DiscordWidget } from "@/components/ui/DiscordWidget";
 
 const faq = [
   {
@@ -34,22 +35,17 @@ export default function IletisimPage() {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <section className="mx-auto max-w-5xl space-y-8 px-4 py-10">
-      <h1 className="font-orbitron text-4xl text-center">İletişim & Sıkça Sorulan Sorular</h1>
-      
-      <div className="flex justify-center">
-        <iframe 
-          src="https://discord.com/widget?id=1494737331528269940&theme=dark" 
-          width="350" 
-          height="500" 
-          allowTransparency={true} 
-          frameBorder="0" 
-          sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
-          className="rounded-xl shadow-lg border border-[var(--border)]"
-        />
+    <section className="mx-auto max-w-5xl space-y-10 px-4 py-10">
+      <div className="text-center">
+        <h1 className="font-orbitron text-4xl mb-2">İletişim & Destek</h1>
+        <p className="text-[var(--text-secondary)]">Sunucumuzla ilgili sorularınız ve destek talepleriniz için topluluğumuza katılın.</p>
       </div>
 
-      <div className="card-base p-6">
+      <DiscordWidget />
+
+      <div>
+        <h2 className="font-orbitron text-2xl text-center mb-6">Sıkça Sorulan Sorular</h2>
+        <div className="card-base p-6">
         <div className="space-y-3">
           {faq.map((item, index) => (
             <div key={item.question} className="rounded-xl border border-[var(--border)] bg-[var(--bg-tertiary)]/50 transition-all duration-300 hover:border-[var(--accent-green)]/50">
@@ -76,6 +72,7 @@ export default function IletisimPage() {
             </div>
           ))}
         </div>
+      </div>
       </div>
 
       <div className="text-center text-[var(--text-muted)]">
