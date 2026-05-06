@@ -14,9 +14,32 @@
  */
 import type { NextAuthConfig } from "next-auth";
 
+// Determine if we're running over HTTPS.
+// Setting secure: true on http://localhost will cause the browser to
+// REFUSE to send the cookie back — silently breaking the session.
+const useSecureCookies = process.env.NEXTAUTH_URL?.startsWith("https://") ?? false;
+
 export const authConfig: NextAuthConfig = {
-  secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
   session: { strategy: "jwt" },
+
+  // Prevents "UntrustedHost" errors on Vercel, behind proxies,
+  // or when the Host header doesn't match NEXTAUTH_URL.
+  trustHost: true,
+
+  // Explicit cookie configuration ensures the session token is set
+  // correctly regardless of deployment environment.
+  cookies: {
+    sessionToken: {
+      name: "next-auth.session-token",
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: useSecureCookies,
+      },
+    },
+  },
 
   // Providers array must be present but empty here — the real Credentials
   // provider (which needs Prisma) is added in lib/auth.ts.
@@ -24,23 +47,21 @@ export const authConfig: NextAuthConfig = {
 
   callbacks: {
     /**
-     * jwt() — runs on every request that needs a token.
+     * jwt() — runs on every request that touches the session.
      *
-     * On first sign-in, `user` is populated with the object returned
-     * from authorize(). We copy every field we need into the token so
-     * they survive across requests.
+     * On first sign-in, `user` is the object returned from authorize().
+     * We copy fields into the token so they persist across requests.
      *
-     * IMPORTANT: We set token.sub explicitly. NextAuth v5 uses token.sub
-     * as the canonical user identifier. Without it, req.auth can be null
-     * even when a cookie exists, causing the middleware to redirect to /giris.
+     * token.sub is NextAuth's canonical user identifier — without it,
+     * req.auth in the middleware is null even when a cookie exists.
      */
     jwt({ token, user }) {
       if (user) {
-        // token.sub is NextAuth's built-in "subject" field — must equal user.id
-        token.sub = user.id ?? token.sub;
+        token.sub = user.id;
         token.id = user.id;
         token.name = user.name;
-        token.username = (user as { username?: string }).username ?? user.name ?? undefined;
+        token.username =
+          (user as { username?: string }).username ?? user.name ?? undefined;
         token.rank = (user as { rank?: string }).rank ?? "Oyuncu";
       }
       return token;
@@ -48,13 +69,11 @@ export const authConfig: NextAuthConfig = {
 
     /**
      * session() — shapes the session object exposed to the client.
-     *
-     * We read from `token` (not from DB) so this is Edge-safe.
-     * Every field set in jwt() above is available here via token.
+     * Reads from token only — no DB calls, Edge-safe.
      */
     session({ session, token }) {
-      if (token) {
-        session.user.id = (token.id ?? token.sub) as string;
+      if (session.user) {
+        session.user.id = (token.sub ?? token.id) as string;
         session.user.name = token.name as string;
         session.user.username = token.username as string;
         session.user.rank = (token.rank ?? "Oyuncu") as string;
@@ -64,8 +83,7 @@ export const authConfig: NextAuthConfig = {
 
     /**
      * authorized() — called by the middleware auth() wrapper.
-     * We return true here unconditionally; redirect logic is in middleware.ts
-     * where we have full control via req.auth.
+     * Return true unconditionally; custom redirect logic lives in middleware.ts.
      */
     authorized() {
       return true;
