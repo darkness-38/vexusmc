@@ -1,9 +1,23 @@
+/**
+ * lib/auth.ts — Node.js runtime ONLY
+ *
+ * This is the FULL NextAuth configuration used by:
+ *   - app/api/auth/[...nextauth]/route.ts  (login/session API)
+ *   - Server Components / Server Actions that call auth()
+ *
+ * It imports Prisma, bcryptjs, and authme — all Node.js-only modules.
+ * It must NEVER be imported by middleware.ts.
+ *
+ * Shared settings (secret, session, callbacks, pages) come from
+ * auth.config.ts to keep a single source of truth.
+ */
 import bcrypt from "bcryptjs";
 import { isAuthMeHash, verifyAuthMePassword } from "@/lib/authme";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
+import { authConfig } from "@/auth.config";
 
 const loginSchema = z.object({
   username: z.string().min(3).max(16).regex(/^[a-zA-Z0-9_]+$/),
@@ -11,11 +25,9 @@ const loginSchema = z.object({
 });
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  // AUTH_SECRET is the NextAuth v5 env var name.
-  // Explicitly setting it ensures the middleware and the JWT callbacks
-  // always use the same signing key.
-  secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
-  session: { strategy: "jwt" },
+  // Spread the Edge-safe config — inherits secret, session strategy,
+  // jwt/session callbacks, and pages. We only add the Credentials provider.
+  ...authConfig,
   providers: [
     Credentials({
       credentials: {
@@ -69,28 +81,4 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
-        token.username =
-          (user as { username?: string }).username ?? user.name ?? undefined;
-        token.rank = (user as { rank?: string }).rank ?? "Oyuncu";
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id as string;
-        session.user.username = token.username as string;
-        session.user.rank = token.rank as string;
-      }
-      return session;
-    },
-  },
-  pages: {
-    signIn: "/giris",
-  },
 });
-
-
