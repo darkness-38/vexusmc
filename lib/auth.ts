@@ -38,8 +38,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const parsed = loginSchema.safeParse(rawCredentials);
         if (!parsed.success) return null;
 
-        const user = await prisma.user.findUnique({
-          where: { username: parsed.data.username },
+        const user = await prisma.user.findFirst({
+          where: { 
+            username: { 
+              equals: parsed.data.username, 
+              mode: "insensitive" 
+            } 
+          },
         });
         if (!user) return null;
 
