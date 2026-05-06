@@ -1,4 +1,5 @@
 import bcrypt from "bcryptjs";
+import { isAuthMeHash, verifyAuthMePassword } from "@/lib/authme";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { z } from "zod";
@@ -26,7 +27,19 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         });
         if (!user) return null;
 
-        const valid = await bcrypt.compare(parsed.data.password, user.password);
+        // Detect hash format at runtime and verify accordingly.
+        // AuthMe (Minecraft) accounts use $SHA$salt$hash format.
+        // Accounts created via the web/seed use bcrypt.
+        let valid: boolean;
+        if (isAuthMeHash(user.password)) {
+          try {
+            valid = verifyAuthMePassword(parsed.data.password, user.password);
+          } catch {
+            valid = false;
+          }
+        } else {
+          valid = await bcrypt.compare(parsed.data.password, user.password);
+        }
         if (!valid) return null;
 
         await prisma.user.update({
